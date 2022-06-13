@@ -1,18 +1,19 @@
-package com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee;
+package com.cisco.cleancode.hexagon.prototype.organizationmanagement.department;
 
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.*;
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-/** The type Employee domain architecture test. */
-class EmployeeDomainArchitectureTest {
+/** The type Department domain architecture test. */
+class DepartmentDomainArchitectureTest {
 
-  /** The constant EMPLOYEE. */
+  /** The constant BASE. */
   public static final String BASE =
-      "com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee";
+      "com.cisco.cleancode.hexagon.prototype.organizationmanagement.department";
 
   /** The constant ADAPTER_IN_WEB. */
   public static final String ADAPTER_IN_WEB = BASE + ".adapter.in.web";
