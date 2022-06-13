@@ -18,7 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 /** The type Query employee service unit test. */
 @SpringBootTest
 @ContextConfiguration(classes = {QueryEmployeeService.class, DomainMapperImpl.class})
-class QueryEmployeeServiceUnitTest {
+class EmployeeQueryUseCaseUnitTest {
 
   /** The Query employee port. */
   @MockBean private QueryEmployeePort queryEmployeePort;

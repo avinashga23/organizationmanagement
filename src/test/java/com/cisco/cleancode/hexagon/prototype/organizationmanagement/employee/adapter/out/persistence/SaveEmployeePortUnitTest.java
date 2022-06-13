@@ -22,13 +22,13 @@ import org.springframework.test.context.ContextConfiguration;
 /** The type Save employee persistence adapter unit test. */
 @SpringBootTest
 @ContextConfiguration(classes = {SaveEmployeePersistenceAdapter.class, PersistenceMapperImpl.class})
-class SaveEmployeePersistenceAdapterUnitTest {
+class SaveEmployeePortUnitTest {
 
   /** The Employee jpa entity repository. */
   @MockBean private EmployeeJPAEntityRepository employeeJPAEntityRepository;
 
   /** The Employee persistence adapter. */
-  @Autowired private SaveEmployeePort employeePersistenceAdapter;
+  @Autowired private SaveEmployeePort saveEmployeePort;
 
   /** The Mapper. */
   @Autowired private PersistenceMapper mapper;
@@ -46,7 +46,7 @@ class SaveEmployeePersistenceAdapterUnitTest {
 
     when(employeeJPAEntityRepository.save(any(EmployeeJPAEntity.class))).thenReturn(employeeJPAEntity);
 
-    var created = employeePersistenceAdapter.createEmployee(mapper.entityToDomain(employeeJPAEntity));
+    var created = saveEmployeePort.createEmployee(mapper.entityToDomain(employeeJPAEntity));
     assertNotNull(created);
     assertEquals(employeeJPAEntity.getName(), created.getName());
     assertEquals(employeeJPAEntity.getId(), created.getId());
@@ -71,7 +71,7 @@ class SaveEmployeePersistenceAdapterUnitTest {
     var employee = mapper.entityToDomain(employeeJPAEntity);
 
     assertThrows(DataIntegrityViolationException.class, () ->
-        employeePersistenceAdapter.createEmployee(employee));
+        saveEmployeePort.createEmployee(employee));
   }
 
   /** Update existing employee. */
@@ -87,7 +87,7 @@ class SaveEmployeePersistenceAdapterUnitTest {
 
     when(employeeJPAEntityRepository.save(any(EmployeeJPAEntity.class))).thenReturn(employeeJPAEntity);
 
-    var updated = employeePersistenceAdapter.updateEmployee(mapper.entityToDomain(employeeJPAEntity));
+    var updated = saveEmployeePort.updateEmployee(mapper.entityToDomain(employeeJPAEntity));
     assertNotNull(updated);
     assertEquals(employeeJPAEntity.getName(), updated.getName());
     assertEquals(employeeJPAEntity.getId(), updated.getId());
@@ -102,7 +102,7 @@ class SaveEmployeePersistenceAdapterUnitTest {
   void deleteEmployee() {
     doNothing().when(employeeJPAEntityRepository).deleteById(anyLong());
 
-    assertDoesNotThrow(() -> employeePersistenceAdapter.deleteEmployee(10L));
+    assertDoesNotThrow(() -> saveEmployeePort.deleteEmployee(10L));
   }
 
 }

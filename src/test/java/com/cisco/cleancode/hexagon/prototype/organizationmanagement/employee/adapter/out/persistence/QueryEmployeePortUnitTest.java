@@ -19,13 +19,13 @@ import org.springframework.test.context.ContextConfiguration;
 @SpringBootTest
 @ContextConfiguration(
     classes = {QueryEmployeePersistenceAdapter.class, PersistenceMapperImpl.class})
-class QueryEmployeePersistenceAdapterUnitTest {
+class QueryEmployeePortUnitTest {
 
   /** The Employee jpa entity repository. */
   @MockBean private EmployeeJPAEntityRepository employeeJPAEntityRepository;
 
   /** The Employee persistence adapter. */
-  @Autowired private QueryEmployeePort employeePersistenceAdapter;
+  @Autowired private QueryEmployeePort queryEmployeePort;
 
   /** Test get existing employee by id. */
   @Test
@@ -40,7 +40,7 @@ class QueryEmployeePersistenceAdapterUnitTest {
 
     when(employeeJPAEntityRepository.findById(anyLong())).thenReturn(Optional.of(employeeJPAEntity));
 
-    var employeeOptional = employeePersistenceAdapter.getEmployeeById(1L);
+    var employeeOptional = queryEmployeePort.getEmployeeById(1L);
 
     assertTrue(employeeOptional.isPresent());
     var employee = employeeOptional.get();
@@ -59,7 +59,7 @@ class QueryEmployeePersistenceAdapterUnitTest {
   void testGetNonExistingEmployeeById() {
     when(employeeJPAEntityRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-    var employeeOptional = employeePersistenceAdapter.getEmployeeById(1L);
+    var employeeOptional = queryEmployeePort.getEmployeeById(1L);
     assertFalse(employeeOptional.isPresent());
   }
 
@@ -76,7 +76,7 @@ class QueryEmployeePersistenceAdapterUnitTest {
 
     when(employeeJPAEntityRepository.findByEmail(anyString())).thenReturn(Optional.of(employeeJPAEntity));
 
-    var employeeOptional = employeePersistenceAdapter.getEmployeeByEmail("employee1@company.com");
+    var employeeOptional = queryEmployeePort.getEmployeeByEmail("employee1@company.com");
 
     assertTrue(employeeOptional.isPresent());
     var employee = employeeOptional.get();
@@ -95,7 +95,7 @@ class QueryEmployeePersistenceAdapterUnitTest {
   void testGetNonExistingEmployeeByEmail() {
     when(employeeJPAEntityRepository.findByEmail(anyString())).thenReturn(Optional.empty());
 
-    var employeeOptional = employeePersistenceAdapter.getEmployeeByEmail("employee1@company.com");
+    var employeeOptional = queryEmployeePort.getEmployeeByEmail("employee1@company.com");
     assertFalse(employeeOptional.isPresent());
   }
 
@@ -104,7 +104,7 @@ class QueryEmployeePersistenceAdapterUnitTest {
   void testExistingEmployeeExistsById() {
     when(employeeJPAEntityRepository.existsById(anyLong())).thenReturn(true);
 
-    assertTrue(employeePersistenceAdapter.employeeExistsById(1L));
+    assertTrue(queryEmployeePort.employeeExistsById(1L));
   }
 
   /** Test non-existing employee exists by id. */
@@ -112,7 +112,7 @@ class QueryEmployeePersistenceAdapterUnitTest {
   void testNonExistingEmployeeExistsById() {
     when(employeeJPAEntityRepository.existsById(anyLong())).thenReturn(false);
 
-    assertFalse(employeePersistenceAdapter.employeeExistsById(1L));
+    assertFalse(queryEmployeePort.employeeExistsById(1L));
   }
 
   /** Test existing employee exists by email. */
@@ -120,7 +120,7 @@ class QueryEmployeePersistenceAdapterUnitTest {
   void testExistingEmployeeExistsByEmail() {
     when(employeeJPAEntityRepository.existsByEmail(anyString())).thenReturn(true);
 
-    assertTrue(employeePersistenceAdapter.employeeExistsByEmail("employee1@company.com"));
+    assertTrue(queryEmployeePort.employeeExistsByEmail("employee1@company.com"));
   }
 
   /** Test non-existing employee exists by email. */
@@ -128,7 +128,7 @@ class QueryEmployeePersistenceAdapterUnitTest {
   void testNonExistingEmployeeExistsByEmail() {
     when(employeeJPAEntityRepository.existsByEmail(anyString())).thenReturn(false);
 
-    assertFalse(employeePersistenceAdapter.employeeExistsByEmail("employee1@company.com"));
+    assertFalse(queryEmployeePort.employeeExistsByEmail("employee1@company.com"));
   }
 
 }

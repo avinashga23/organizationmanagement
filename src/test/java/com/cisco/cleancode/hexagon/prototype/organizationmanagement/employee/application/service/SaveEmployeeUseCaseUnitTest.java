@@ -29,7 +29,7 @@ import org.springframework.test.context.ContextConfiguration;
 /** The type Save employee service unit test. */
 @SpringBootTest
 @ContextConfiguration(classes = {SaveEmployeeService.class, DomainMapperImpl.class})
-class SaveEmployeeServiceUnitTest {
+class SaveEmployeeUseCaseUnitTest {
 
   /** The Query employee service. */
   @MockBean private QueryEmployeeService queryEmployeeService;
