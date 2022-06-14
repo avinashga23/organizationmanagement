@@ -1,15 +1,23 @@
 package com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.application.service;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.when;
 
+import com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.application.port.exception.EmployeeFoundException;
 import com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.application.port.in.CreateEmployeeCommand;
 import com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.application.port.in.SaveEmployeeUseCase;
 import com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.application.port.in.UpdateEmployeeCommand;
 import com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.application.port.out.SaveEmployeePort;
+import com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.domain.Employee;
 import com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.domain.Gender;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.stream.Stream;
 import javax.validation.ConstraintViolationException;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +58,20 @@ class SaveEmployeeValidationUnitTest {
   }
 
   /**
+   * Test create employee with valid command.
+   */
+  @Test
+  void testCreateEmployeeWithValidCommand() {
+    var commandContainer = createEmployeeCommandStream().findFirst();
+    assertTrue(commandContainer.isPresent());
+
+    var command = commandContainer.get();
+    command.setName("employee1");
+
+    assertDoesNotThrow(() -> saveEmployeeUseCase.createEmployee(commandContainer.get()));
+  }
+
+  /**
    * Test update employee with invalid command.
    *
    * @param command the command
@@ -59,6 +81,20 @@ class SaveEmployeeValidationUnitTest {
   void testUpdateEmployeeWithInvalidCommand(UpdateEmployeeCommand command) {
     assertThrows(ConstraintViolationException.class,
         () -> saveEmployeeUseCase.updateEmployee(command));
+  }
+
+  /** Test update employee with valid command. */
+  @Test
+  void testUpdateEmployeeWithValidCommand() {
+    var commandContainer = updateEmployeeCommandStream().findFirst();
+    assertTrue(commandContainer.isPresent());
+
+    when(queryEmployeeService.getEmployeeById(anyLong())).thenReturn(Optional.of(new Employee()));
+
+    var command = commandContainer.get();
+    command.setId(10L);
+
+    assertDoesNotThrow(() -> saveEmployeeUseCase.updateEmployee(command));
   }
 
   /**
