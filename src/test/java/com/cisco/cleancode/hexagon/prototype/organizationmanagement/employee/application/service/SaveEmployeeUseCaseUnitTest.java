@@ -22,7 +22,6 @@ import java.time.LocalDate;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
@@ -32,8 +31,7 @@ import org.springframework.test.context.ContextConfiguration;
 @ContextConfiguration(
     classes = {
       SaveEmployeeService.class,
-      DomainMapperImpl.class,
-      ValidationAutoConfiguration.class
+      DomainMapperImpl.class
     })
 class SaveEmployeeUseCaseUnitTest {
 
