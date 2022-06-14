@@ -15,15 +15,6 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 interface DomainMapper {
 
   /**
-   * Domain to domain employee.
-   *
-   * @param src the src
-   * @param target the target
-   * @return the employee
-   */
-Employee domainToDomain(Employee src, @MappingTarget Employee target);
-
-  /**
    * Command to domain employee.
    *
    * @param createEmployeeCommand the create employee request
@@ -33,17 +24,6 @@ Employee domainToDomain(Employee src, @MappingTarget Employee target);
   @Mapping(source = "email", target = "primaryEmail")
   @Mapping(source = "dob", target = "dateOfBirth")
   Employee commandToDomain(CreateEmployeeCommand createEmployeeCommand);
-
-  /**
-   * Command to domain employee.
-   *
-   * @param updateEmployeeRequest the update employee request
-   * @return the employee
-   */
-@Mapping(target = "departmentId", ignore = true)
-  @Mapping(source = "email", target = "primaryEmail")
-  @Mapping(source = "dob", target = "dateOfBirth")
-  Employee commandToDomain(UpdateEmployeeCommand updateEmployeeRequest);
 
   /**
    * Command to domain employee.

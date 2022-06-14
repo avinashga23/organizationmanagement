@@ -47,7 +47,7 @@ class SaveEmployeeUseCaseUnitTest {
   @Autowired private SaveEmployeeUseCase saveEmployeeUseCase;
 
   /**
-   * Test create employee with non existing email.
+   * Test create employee with +non-existing email.
    *
    * @throws EmployeeFoundException the employee found exception
    */
