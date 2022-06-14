@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
@@ -21,6 +22,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 /** The type Employee query use case integration test. */
 @Testcontainers
 @SpringBootTest
+@DirtiesContext
 @Transactional
 @Sql({"/scripts/query-employee-service-integration.sql"})
 class EmployeeQueryUseCaseIntegrationTest {
