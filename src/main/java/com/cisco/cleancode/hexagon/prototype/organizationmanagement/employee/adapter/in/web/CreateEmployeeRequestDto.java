@@ -1,6 +1,7 @@
 package com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.adapter.in.web;
 
 import com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.domain.Gender;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ class CreateEmployeeRequestDto {
   private String email;
 
   /** The Dob. */
+  @JsonFormat(pattern = "yyyy-MM-dd")
   private LocalDate dob;
 
   /** The Department id. */

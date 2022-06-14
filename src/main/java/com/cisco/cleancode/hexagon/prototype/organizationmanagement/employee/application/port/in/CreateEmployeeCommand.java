@@ -1,7 +1,6 @@
 package com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.application.port.in;
 
 import com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.domain.Gender;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -13,7 +12,7 @@ import lombok.NoArgsConstructor;
 
 /** The type Create employee request. */
 @Data
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateEmployeeCommand {
@@ -23,13 +22,12 @@ public class CreateEmployeeCommand {
   private String name;
 
   /** The Email. */
-  @NotNull(message = "email_is_null")
+  @NotBlank(message = "email_is_null")
   @Email(message = "invalid_email")
   private String email;
 
   /** The Dob. */
   @NotNull(message = "null_dob")
-  @JsonFormat(pattern = "yyyy-MM-dd")
   private LocalDate dob;
 
   /** The Department id. */

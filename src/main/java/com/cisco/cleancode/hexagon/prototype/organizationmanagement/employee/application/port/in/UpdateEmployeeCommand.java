@@ -5,10 +5,16 @@ import java.time.LocalDate;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /** The type Update employee request. */
 @Data
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class UpdateEmployeeCommand {
 
   /** The Id. */
@@ -20,7 +26,7 @@ public class UpdateEmployeeCommand {
   private String name;
 
   /** The Email. */
-  @NotNull(message = "email_is_null")
+  @NotBlank(message = "email_is_null")
   @Email(message = "invalid_email")
   private String email;
 

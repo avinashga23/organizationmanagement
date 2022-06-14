@@ -10,11 +10,11 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
-import com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.application.port.in.CreateEmployeeCommand;
-import com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.application.port.in.UpdateEmployeeCommand;
 import com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.application.port.exception.EmployeeFoundException;
 import com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.application.port.exception.EmployeeNotFoundException;
+import com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.application.port.in.CreateEmployeeCommand;
 import com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.application.port.in.SaveEmployeeUseCase;
+import com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.application.port.in.UpdateEmployeeCommand;
 import com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.application.port.out.SaveEmployeePort;
 import com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.domain.Employee;
 import com.cisco.cleancode.hexagon.prototype.organizationmanagement.employee.domain.Gender;
@@ -22,13 +22,19 @@ import java.time.LocalDate;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 
-/** The type Save employee service unit test. */
+/** The type Save employee use case unit test. */
 @SpringBootTest
-@ContextConfiguration(classes = {SaveEmployeeService.class, DomainMapperImpl.class})
+@ContextConfiguration(
+    classes = {
+      SaveEmployeeService.class,
+      DomainMapperImpl.class,
+      ValidationAutoConfiguration.class
+    })
 class SaveEmployeeUseCaseUnitTest {
 
   /** The Query employee service. */
@@ -87,8 +93,9 @@ class SaveEmployeeUseCaseUnitTest {
     createEmployeeCommand.setDepartmentId(10L);
     createEmployeeCommand.setDob(LocalDate.of(1990, 1, 1));
 
-    assertThrows(EmployeeFoundException.class, () -> saveEmployeeUseCase.createEmployee(
-        createEmployeeCommand));
+    assertThrows(
+        EmployeeFoundException.class,
+        () -> saveEmployeeUseCase.createEmployee(createEmployeeCommand));
   }
 
   /**
@@ -138,7 +145,9 @@ class SaveEmployeeUseCaseUnitTest {
     updateEmployeeRequest.setName("employee1");
     updateEmployeeRequest.setDob(LocalDate.of(1990, 1, 1));
 
-    assertThrows(EmployeeNotFoundException.class, () -> saveEmployeeUseCase.updateEmployee(updateEmployeeRequest));
+    assertThrows(
+        EmployeeNotFoundException.class,
+        () -> saveEmployeeUseCase.updateEmployee(updateEmployeeRequest));
   }
 
   /** Test delete existing employee. */
